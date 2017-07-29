@@ -1,6 +1,6 @@
-## J-Pop Lyrics Analysis
+# J-Pop Lyrics Analysis
 
-### Installation Prerequisites
+## Installation Prerequisites
 
 `brew install mecab`
 
@@ -8,17 +8,19 @@
 
 `pip3 install mecab-python3`
 
-### Work Flow
+## Work Flow
 
 1. Extract and store the lyrics into SQLite database locally. (get-lyrics.py)
 2. Use Mecab, a morphological analysis engine, to splite the lyrics sentences into unit words. (morphological-analysis.py)
 3. Use cloud word to analyze and generate the cloud word image. (generate_word_cloud.py)
 
-### TODO
+![word cloud sample](https://raw.githubusercontent.com/IvanWoo/jpop-lyrics-analysis/master/word_cloud_sample.png)
+
+## TODO
 
 - Extend the database.
 - Exam different extraction criteria.
 
-### Acknowledgments
+## Acknowledgments
 
-- Inspired by [猫弟Azz](https://www.douban.com/note/630489583/)
+- Inspired by [猫弟Azz](https://www.douban.com/note/630489583/).
