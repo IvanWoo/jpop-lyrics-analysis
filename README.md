@@ -18,8 +18,8 @@
 
 ## TODO
 
-- Extend the database.
-- Exam different extraction criteria.
+- Expand the database.
+- Try different extraction criteria.
 
 ## Acknowledgments
 

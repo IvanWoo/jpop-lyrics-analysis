@@ -23,6 +23,7 @@ class SentenceSplit:
             for criteria in criterias:
                 if feature.startswith(criteria):
                     target_words.append(surface)
+                    break
         return ' '.join(target_words)
 
     def get_words_feed(self, words_cloud_txt, criterias):
@@ -34,7 +35,7 @@ class SentenceSplit:
 
 
 if __name__ == "__main__":
-    # TODO: Exam different extraction criteria.
+    # TODO: Try different extraction criteria.
     criterias = ["名詞-一般", "動詞-自立", "名詞-代名詞-一般"]
     analysis = SentenceSplit("jpop-lyrics.db")
     analysis.get_words_feed("word-cloud-feed.txt", criterias)

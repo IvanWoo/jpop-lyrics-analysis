@@ -53,6 +53,6 @@ class JpopLyrics:
 
 
 if __name__ == "__main__":
-    # TODO: Extend the database.
+    # TODO: Expand the database.
     jpop_lyrics_database = JpopLyrics("jpop-lyrics.db")
     jpop_lyrics_database.parse_lyrics()
