@@ -32,6 +32,10 @@ class JpopLyrics:
         # replace full-width space with half-width one
         return lyrics.replace("　", " ")
 
+    def _is_exist(self, title):
+        self.cursor.execute('SELECT title FROM ebichu WHERE title=?', (title, ))
+        return self.cursor.fetchone() is not None
+
     def parse_lyrics(self):
         self._initialize_database()
         html = requests.get("http://www.uta-net.com/artist/12973/")
@@ -45,9 +49,13 @@ class JpopLyrics:
             lyricist = table.find("td", {"class": "td3"}).text
             composer = table.find("td", {"class": "td4"}).text
             lyrics = self._get_lyrics(lyric_url)
-            self._save_to_database(title, artist, lyricist, composer, lyric_url, lyrics)
-            print("saved " + str(title) + " into database")
-            self.connection.commit()
+            if self._is_exist(title):
+                print(str(title) + " is EXISTED in the database")
+                continue
+            else:
+                self._save_to_database(title, artist, lyricist, composer, lyric_url, lyrics)
+                print("SAVED " + str(title) + " into the database")
+                self.connection.commit()
 
         self.connection.close()
 
