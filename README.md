@@ -3,10 +3,13 @@
 ## Installation Prerequisites
 
 `brew install mecab`
-
 `brew install mecab-ipadic`
+`brew install swig`
 
-`pip3 install mecab-python3`
+`python -m venv venv`
+
+`pip install --upgrade`
+`pip install -r requirements.txt`
 
 ## Work Flow
 
