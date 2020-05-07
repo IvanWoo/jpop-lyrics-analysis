@@ -21,12 +21,12 @@ $ pre-commit install
 1. Extract and store the lyrics into SQLite database locally.
 
 ```sh
-python get-lyrics.py
+python get_lyrics.py
 ```
 2. Use Mecab, a morphological analysis engine, to splite the lyrics sentences into unit words. 
 
 ```sh
-python morphological-analysis.py
+python morphological_analysis.py
 ```
 
 3. Use cloud word to analyze and generate the cloud word image.

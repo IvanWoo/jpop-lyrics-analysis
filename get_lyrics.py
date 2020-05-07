@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from bs4.element import NavigableString
 import requests
 import sqlite3
 
@@ -23,21 +24,15 @@ class JpopLyrics:
             + str((title, artist, lyricist, composer, lyric_url, lyrics))
         )
 
-    def _get_svg_url(self, url):
+    @staticmethod
+    def get_lyrics(url):
         r = requests.get(url)
         soup = BeautifulSoup(r.text, "lxml")
-        svg_url = soup.find("span", {"id": "ipad_kashi"}).img["src"]
-        return self.DOMAIN + svg_url
+        contents = soup.find("div", {"id": "kashi_area"}).contents
+        lyrics = " ".join(filter(lambda x: type(x) == NavigableString, contents))
 
-    def _get_lyrics(self, url):
-        svg_url = self._get_svg_url(url)
-        r = requests.get(svg_url)
-        soup = BeautifulSoup(r.text, "lxml")
-        lyrics = ""
-        for line in soup.find_all("text"):
-            lyrics += line.text
         # replace full-width space with half-width one
-        return lyrics.replace("　", " ")
+        return lyrics.replace("\u3000", " ").replace("　", " ")
 
     def _is_exist(self, title):
         self.cursor.execute("SELECT title FROM ebichu WHERE title=?", (title,))
@@ -56,7 +51,7 @@ class JpopLyrics:
             artist = table.find("td", {"class": "td2"}).text
             lyricist = table.find("td", {"class": "td3"}).text
             composer = table.find("td", {"class": "td4"}).text
-            lyrics = self._get_lyrics(lyric_url)
+            lyrics = JpopLyrics.get_lyrics(lyric_url)
             if self._is_exist(title):
                 print(str(title) + " is EXISTED in the database")
                 continue

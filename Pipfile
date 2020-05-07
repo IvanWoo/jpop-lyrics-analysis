@@ -9,6 +9,7 @@ flake8 = "*"
 autoflake = "*"
 fabric = "*"
 pre-commit = "*"
+ipython = "*"
 
 [packages]
 beautifulsoup4 = "*"
