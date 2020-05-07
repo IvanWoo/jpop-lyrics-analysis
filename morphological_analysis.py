@@ -1,4 +1,6 @@
+import argparse
 import sqlite3
+
 import MeCab
 
 
@@ -26,18 +28,28 @@ class SentenceSplit:
                     break
         return " ".join(target_words)
 
-    def get_words_feed(self, words_cloud_txt, criterias):
+    def get_words_feed(self, artist, words_cloud_txt, criterias):
         with open(words_cloud_txt, "w") as text_file:
             for lyrics in self.cursor.execute(
-                "SELECT lyrics FROM ebichu ORDER BY title"
+                f"SELECT lyrics FROM jpop WHERE artist = '{artist}' ORDER BY title"
             ):
                 target_words = self._extract_word_by(criterias, lyrics[0])
                 text_file.write(str(target_words))
         print(words_cloud_txt + " is generated")
 
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(description="analyze jpop lyrics")
+    # eg: 私立恵比寿中学
+    parser.add_argument("-a", "--artist", type=str)
+    args = parser.parse_args()
+
     # TODO: Try different extraction criteria.
     criterias = ["名詞-一般", "動詞-自立", "名詞-代名詞-一般"]
-    analysis = SentenceSplit("jpop-lyrics.db")
-    analysis.get_words_feed("word-cloud-feed.txt", criterias)
+    db = SentenceSplit("jpop-lyrics.db")
+    db.get_words_feed(args.artist, "word-cloud-feed.txt", criterias)
+    return
+
+
+if __name__ == "__main__":
+    main()
