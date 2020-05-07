@@ -10,16 +10,23 @@ class JpopLyrics:
         self.DOMAIN = "http://www.uta-net.com"
 
     def _initialize_database(self):
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS ebichu 
-                            (title text, artist text, lyricist text, composer text, lyric_url text, lyrics text)""")
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS ebichu
+            (title text, artist text, lyricist text, composer text, lyric_url text, lyrics text)
+            """
+        )
 
     def _save_to_database(self, title, artist, lyricist, composer, lyric_url, lyrics):
-        self.cursor.execute("INSERT INTO ebichu VALUES " + str((title, artist, lyricist, composer, lyric_url, lyrics)))
+        self.cursor.execute(
+            "INSERT INTO ebichu VALUES "
+            + str((title, artist, lyricist, composer, lyric_url, lyrics))
+        )
 
     def _get_svg_url(self, url):
         r = requests.get(url)
         soup = BeautifulSoup(r.text, "lxml")
-        svg_url = soup.find("span", {"id": "ipad_kashi"}).img['src']
+        svg_url = soup.find("span", {"id": "ipad_kashi"}).img["src"]
         return self.DOMAIN + svg_url
 
     def _get_lyrics(self, url):
@@ -27,13 +34,13 @@ class JpopLyrics:
         r = requests.get(svg_url)
         soup = BeautifulSoup(r.text, "lxml")
         lyrics = ""
-        for line in soup.find_all('text'):
+        for line in soup.find_all("text"):
             lyrics += line.text
         # replace full-width space with half-width one
         return lyrics.replace("　", " ")
 
     def _is_exist(self, title):
-        self.cursor.execute('SELECT title FROM ebichu WHERE title=?', (title, ))
+        self.cursor.execute("SELECT title FROM ebichu WHERE title=?", (title,))
         return self.cursor.fetchone() is not None
 
     def parse_lyrics(self):
@@ -42,7 +49,8 @@ class JpopLyrics:
         soup = BeautifulSoup(html.text, "lxml")
 
         for table in soup.find_all("tr"):
-            if table.th: continue
+            if table.th:
+                continue
             title = table.find("td", {"class": "side td1"}).text
             lyric_url = self.DOMAIN + table.find("td", {"class": "side td1"}).a["href"]
             artist = table.find("td", {"class": "td2"}).text
@@ -53,7 +61,9 @@ class JpopLyrics:
                 print(str(title) + " is EXISTED in the database")
                 continue
             else:
-                self._save_to_database(title, artist, lyricist, composer, lyric_url, lyrics)
+                self._save_to_database(
+                    title, artist, lyricist, composer, lyric_url, lyrics
+                )
                 print("SAVED " + str(title) + " into the database")
                 self.connection.commit()
 

@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "*"
+flake8 = "*"
+autoflake = "*"
+fabric = "*"
+pre-commit = "*"
+
+[packages]
+beautifulsoup4 = "*"
+matplotlib = "*"
+mecab-python3 = "*"
+numpy = "*"
+requests = "*"
+urllib3 = "*"
+wordcloud = "*"
+pillow = "*"
+lxml = "*"
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true

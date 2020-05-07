@@ -5,26 +5,38 @@ https://github.com/amueller/word_cloud/blob/master/examples/simple.py
 from os import path
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+
 from PIL import Image
 import numpy as np
 
-d = path.dirname(__file__)
 
-# Read the whole text.
-text = open(path.join(d, "word-cloud-feed.txt")).read()
+def main():
+    d = path.dirname(__file__)
 
-ebichu_mask = np.array(Image.open(path.join(d, "resources/ebichu-2x.png")))
+    # Read the whole text.
+    text = open(path.join(d, "word-cloud-feed.txt")).read()
 
-# Generate a word cloud image
-wordcloud = WordCloud(font_path='/System/Library/Fonts/PingFang.ttc', background_color="white", max_words=200, mask=ebichu_mask).generate(text)
+    ebichu_mask = np.array(Image.open(path.join(d, "resources/ebichu-2x.png")))
 
-# Display the generated image:
-# the matplotlib way:
-plt.figure()
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis("off")
-plt.show()
+    # Generate a word cloud image
+    wordcloud = WordCloud(
+        font_path="/System/Library/Fonts/PingFang.ttc",
+        background_color="white",
+        max_words=200,
+        mask=ebichu_mask,
+    ).generate(text)
 
-# The pil way (if you don't have matplotlib)
-# image = wordcloud.to_image()
-# image.show()
+    # Display the generated image:
+    # the matplotlib way:
+    plt.figure()
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.show()
+
+    # The pil way (if you don't have matplotlib)
+    # image = wordcloud.to_image()
+    # image.show()
+
+
+if __name__ == "__main__":
+    main()
