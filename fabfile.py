@@ -13,5 +13,4 @@ def freeze(c):
 
 @task
 def format(c):
-    run(c, "black .")
-    run(c, "autoflake --remove-all-unused-imports -i -r .")
+    run(c, "pre-commit run --all-files")

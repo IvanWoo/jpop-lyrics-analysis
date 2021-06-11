@@ -11,6 +11,7 @@ fabric = "*"
 pre-commit = "*"
 ipython = "*"
 jpop-lyrics-analysis = {editable = true, path = "."}
+isort = "*"
 
 [packages]
 beautifulsoup4 = "*"

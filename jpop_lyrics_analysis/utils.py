@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from wordcloud import WordCloud
 import matplotlib.pyplot as plt
-from PIL import Image
 import numpy as np
+from PIL import Image
+from wordcloud import WordCloud
 
 from jpop_lyrics_analysis.databases import Sqlite
 from jpop_lyrics_analysis.scrapers import UtaNet

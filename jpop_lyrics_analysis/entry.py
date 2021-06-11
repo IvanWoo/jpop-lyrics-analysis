@@ -3,10 +3,10 @@ from functools import partial
 import click
 
 from jpop_lyrics_analysis.utils import (
-    get_lyrics,
-    get_artists,
-    morphological_analysis,
     generate_word_cloud,
+    get_artists,
+    get_lyrics,
+    morphological_analysis,
 )
 
 click.option = partial(click.option, show_default=True)

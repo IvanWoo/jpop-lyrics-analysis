@@ -1,4 +1,5 @@
 from typing import Set
+
 import MeCab
 
 from jpop_lyrics_analysis.databases import Sqlite
