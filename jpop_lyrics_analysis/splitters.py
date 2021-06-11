@@ -29,11 +29,9 @@ class SentenceSplitter:
         return target_words
 
     def get_word_feed(self, artist):
-        # TODO: use contextmanager for db
-        db = Sqlite()
-        feed = []
-        for lyrics in db.lyrics_by_artist(artist):
-            target_words = self._extract_word_by(lyrics)
-            feed.extend(target_words)
-        db.close()
+        with Sqlite() as db:
+            feed = []
+            for lyrics in db.lyrics_by_artist(artist):
+                target_words = self._extract_word_by(lyrics)
+                feed.extend(target_words)
         return feed

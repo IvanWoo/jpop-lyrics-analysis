@@ -24,20 +24,15 @@ OUTPUT_FILE = TMP_DIR / f"word-cloud-{TMP_AFFIX}.png"
 
 def get_lyrics(url):
     scraper = UtaNet()
-    # TODO: use contextmanager for db
-    db = Sqlite()
-    for jpop in scraper.parse(url):
-        db.insert(jpop)
-    db.close()
+    with Sqlite() as db:
+        for jpop in scraper.parse(url):
+            db.insert(jpop)
     return
 
 
 def get_artists():
-    # TODO: use contextmanager for db
-    db = Sqlite()
-    artists = db.artists()
-    db.close()
-    return artists
+    with Sqlite() as db:
+        return db.artists()
 
 
 def morphological_analysis(artist):
