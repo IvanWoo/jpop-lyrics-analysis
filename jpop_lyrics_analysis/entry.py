@@ -39,6 +39,12 @@ def scrape(url):
     help="Target artist to analyze",
 )
 def analyze(artist):
+    """
+    \b
+    Analyze and generate the word cloud.
+    Examples:
+      - jla analyze -a aiko
+    """
     morphological_analysis(artist)
     generate_word_cloud()
 
