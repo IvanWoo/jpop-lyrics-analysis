@@ -5,6 +5,8 @@ import requests
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
 
+TABLE_NAME = "jpop"
+
 
 class JpopLyrics:
     def __init__(self, data_base):
@@ -14,8 +16,8 @@ class JpopLyrics:
 
     def _initialize_database(self):
         self.cursor.execute(
-            """
-            CREATE TABLE IF NOT EXISTS jpop
+            f"""
+            CREATE TABLE IF NOT EXISTS {TABLE_NAME}
             (title text, artist text, lyricist text, composer text, lyric_url text, lyrics text)
             """
         )
@@ -36,8 +38,11 @@ class JpopLyrics:
         # replace full-width space with half-width one
         return lyrics.replace("\u3000", " ").replace("　", " ")
 
-    def _is_exist(self, title):
-        self.cursor.execute("SELECT title FROM jpop WHERE title=?", (title,))
+    def _is_exist(self, title, artist):
+        self.cursor.execute(
+            f"SELECT title FROM {TABLE_NAME} WHERE title=? AND artist=?",
+            (title, artist),
+        )
         return self.cursor.fetchone() is not None
 
     def parse_lyrics(self, url):
@@ -54,7 +59,7 @@ class JpopLyrics:
             lyricist = table.find("td", {"class": "td3"}).text
             composer = table.find("td", {"class": "td4"}).text
             lyrics = JpopLyrics.get_lyrics(lyric_url)
-            if self._is_exist(title):
+            if self._is_exist(title, artist):
                 print(str(title) + " EXISTED in the database")
                 continue
             else:
