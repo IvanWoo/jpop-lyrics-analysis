@@ -10,6 +10,7 @@ autoflake = "*"
 fabric = "*"
 pre-commit = "*"
 ipython = "*"
+jpop-lyrics-analysis = {editable = true, path = "."}
 
 [packages]
 beautifulsoup4 = "*"
@@ -21,6 +22,7 @@ urllib3 = "*"
 wordcloud = "*"
 pillow = "*"
 lxml = "*"
+click = "*"
 
 [requires]
 python_version = "3.8"

@@ -16,26 +16,21 @@ $ pipenv install --dev
 $ pre-commit install
 ```
 
-## Work Flow
+## Workflow
 
 1. Extract and store the lyrics into SQLite database locally.
 
 ```sh
-python get_lyrics.py
+jla scrape --help
 ```
-2. Use Mecab, a morphological analysis engine, to splite the lyrics sentences into unit words. 
+
+2. Analyze then generate the word cloud
 
 ```sh
-python morphological_analysis.py
+jla analyze --help
 ```
 
-3. Use cloud word to analyze and generate the cloud word image.
-
-```sh
-python generate_word_cloud.py
-```
-
-![word cloud sample](https://raw.githubusercontent.com/IvanWoo/jpop-lyrics-analysis/master/word_cloud_sample.png)
+![word cloud sample](examples/word_cloud_sample.png)
 
 ## TODO
 
