@@ -8,7 +8,7 @@ TABLE_NAME = "jpop"
 
 class Sqlite:
     def __init__(self):
-        self.connection = sqlite3.connect(SQLITE_ADDRESS)
+        self.connection = sqlite3.connect(SQLITE_ADDRESS, isolation_level=None)
         self.cursor = self.connection.cursor()
         self._init_db()
 
@@ -44,6 +44,7 @@ class Sqlite:
         return self.cursor.fetchone() is not None
 
     def insert(self, jpop: Jpop):
+        # TODO: find better way to check exist before expensive lyrics scraping
         if self._is_exist(jpop.title, jpop.artist):
             print(f"{jpop} EXISTED in the database")
         else:
