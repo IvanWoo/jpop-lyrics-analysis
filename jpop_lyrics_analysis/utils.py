@@ -1,3 +1,5 @@
+import uuid
+from datetime import datetime
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -12,9 +14,12 @@ from jpop_lyrics_analysis.splitters import SentenceSplitter
 CURRENT_DIR = Path(__file__).resolve()
 ROOT_DIR = CURRENT_DIR.parents[1]
 PACKAGE_DIR = CURRENT_DIR.parent
-WORD_FEED_FILE = ROOT_DIR / "tmp" / "word_feed.txt"
+TMP_DIR = ROOT_DIR / "tmp"
+TMP_DIR.mkdir(parents=True, exist_ok=True)
+TMP_AFFIX = f"{datetime.now().strftime('%Y-%m-%d')}-{str(uuid.uuid1())}"
+WORD_FEED_FILE = TMP_DIR / f"word-feed-{TMP_AFFIX}.txt"
 MASK_FILE = PACKAGE_DIR / "resources" / "ebichu-2x.png"
-OUTPUT_FILE = ROOT_DIR / "tmp" / "word_cloud.png"
+OUTPUT_FILE = TMP_DIR / f"word-cloud-{TMP_AFFIX}.png"
 
 
 def get_lyrics(url):
