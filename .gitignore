@@ -8,6 +8,7 @@
 *.so
 *.cfg
 !setup.cfg
+!.isort.cfg
 *.orig
 *.log
 *.pot
