@@ -10,9 +10,11 @@ from jpop_lyrics_analysis.scrapers import UtaNet
 from jpop_lyrics_analysis.splitters import SentenceSplitter
 
 CURRENT_DIR = Path(__file__).resolve()
-WORD_FEED_FILE = CURRENT_DIR.parents[1] / "tmp" / "word_feed.txt"
-MASK_FILE = CURRENT_DIR.parent / "resources" / "ebichu-2x.png"
-OUTPUT_FILE = CURRENT_DIR.parents[1] / "tmp" / "word_cloud.png"
+ROOT_DIR = CURRENT_DIR.parents[1]
+PACKAGE_DIR = CURRENT_DIR.parent
+WORD_FEED_FILE = ROOT_DIR / "tmp" / "word_feed.txt"
+MASK_FILE = PACKAGE_DIR / "resources" / "ebichu-2x.png"
+OUTPUT_FILE = ROOT_DIR / "tmp" / "word_cloud.png"
 
 
 def get_lyrics(url):
@@ -23,6 +25,14 @@ def get_lyrics(url):
         db.insert(jpop)
     db.close()
     return
+
+
+def get_artists():
+    # TODO: use contextmanager for db
+    db = Sqlite()
+    artists = db.artists()
+    db.close()
+    return artists
 
 
 def morphological_analysis(artist):

@@ -4,6 +4,7 @@ import click
 
 from jpop_lyrics_analysis.utils import (
     get_lyrics,
+    get_artists,
     morphological_analysis,
     generate_word_cloud,
 )
@@ -30,7 +31,13 @@ def scrape(url):
 
 
 @cli.command()
-@click.option("-a", "--artist", required=True, help="Target artist to analyze")
+@click.option(
+    "-a",
+    "--artist",
+    type=click.Choice(get_artists()),
+    required=True,
+    help="Target artist to analyze",
+)
 def analyze(artist):
     morphological_analysis(artist)
     generate_word_cloud()

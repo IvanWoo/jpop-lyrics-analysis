@@ -44,9 +44,13 @@ class Sqlite:
             self._insert(**jpop.asdict())
             print(f"INSERTED {jpop} into the database")
 
+    def artists(self):
+        self.cursor.execute(f"SELECT DISTINCT artist FROM {TABLE_NAME}")
+        return [x[0] for x in self.cursor.fetchall()]
+
     def lyrics_by_artist(self, artist):
         stream = self.cursor.execute(
-            f"SELECT lyrics FROM jpop WHERE artist = '{artist}' ORDER BY title"
+            f"SELECT lyrics FROM {TABLE_NAME} WHERE artist = '{artist}' ORDER BY title"
         )
         for lyrics in stream:
             yield lyrics[0]
