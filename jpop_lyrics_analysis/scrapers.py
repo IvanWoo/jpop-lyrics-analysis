@@ -9,7 +9,7 @@ class UtaNet:
     domain = "http://www.uta-net.com"
 
     def validate(self, url: str) -> bool:
-        artist_url = f"{self.domain}/artists/"
+        artist_url = f"{self.domain}/artist/"
         return url.startswith(artist_url)
 
     def get_lyrics(self, url):
@@ -43,7 +43,7 @@ class UtaNet:
             artist = table.find("td", {"class": "td2"}).text
             lyricist = table.find("td", {"class": "td3"}).text
             composer = table.find("td", {"class": "td4"}).text
-            lyrics = self.get_lyrics(lyric_url)
+            lyrics = None
 
             yield Jpop(
                 title=title,

@@ -26,6 +26,11 @@ def get_lyrics(url):
     scraper = UtaNet()
     with Sqlite() as db:
         for jpop in scraper.parse(url):
+            if db.is_exist(jpop.title, jpop.artist):
+                print(f"{jpop} EXISTED in the database")
+                continue
+            # get_lyrics is very expensive, call it when the entry is not exist
+            jpop.lyrics = scraper.get_lyrics(jpop.lyric_url)
             db.insert(jpop)
     return
 
