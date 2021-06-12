@@ -12,6 +12,8 @@ pre-commit = "*"
 ipython = "*"
 jpop-lyrics-analysis = {editable = true, path = "."}
 isort = "*"
+pytest = "*"
+pytest-cov = "*"
 
 [packages]
 beautifulsoup4 = "*"
@@ -30,3 +32,6 @@ python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
+
+[scripts]
+test="pytest --verbose -s -p no:warnings --cov-report term-missing --cov 'jpop_lyrics_analysis'"

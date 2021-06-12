@@ -40,14 +40,23 @@ def get_artists():
         return db.artists()
 
 
-def morphological_analysis(artist):
+def get_word_feed(artist):
     # TODO: Try different extraction criteria.
     criterias = ["名詞-一般", "動詞-自立", "名詞-代名詞-一般"]
     splitter = SentenceSplitter(criterias)
-    words_feed = splitter.get_word_feed(artist)
 
+    with Sqlite() as db:
+        word_feed = []
+        for lyrics in db.lyrics_by_artist(artist):
+            target_words = splitter.extract(lyrics)
+            word_feed.extend(target_words)
+    return word_feed
+
+
+def morphological_analysis(artist):
+    word_feed = get_word_feed(artist)
     with open(WORD_FEED_FILE, "w") as file:
-        file.write(" ".join(words_feed))
+        file.write(" ".join(word_feed))
     print(f"{WORD_FEED_FILE} is generated")
 
 

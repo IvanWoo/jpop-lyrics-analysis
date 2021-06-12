@@ -1,37 +1,27 @@
-from typing import Set
+from typing import List
 
 import MeCab
 
-from jpop_lyrics_analysis.databases import Sqlite
-
 
 class SentenceSplitter:
-    def __init__(self, criterias):
+    def __init__(self, criterias: List[str]):
         self.splitter = MeCab.Tagger("-Ochasen")
         self.criterias = criterias
 
-    def _extract_word_by(self, lyrics) -> Set:
+    def get_chunks(self, content: str):
+        chunks = self.splitter.parse(content).splitlines()[:-1]
+        return [x.split("\t") for x in chunks]
+
+    def extract(self, lyrics: str) -> List[str]:
         """
-        # https://gist.github.com/ikegami-yukino/68a741ef854de68871cc#file-parse_vs_parsetonode-ipynb
-        :param criterias: list
-        :param lyrics: string
-        :return: words separated by space
+        https://gist.github.com/ikegami-yukino/68a741ef854de68871cc#file-parse_vs_parsetonode-ipynb
         """
         target_words = []
-        for chunk in self.splitter.parse(lyrics).splitlines()[:-1]:
-            chunks = chunk.split("\t")
-            (surface, feature) = chunks[2], chunks[3]
-            # print(feature)
+        chunks = self.get_chunks(lyrics)
+        for chunk in chunks:
+            (surface, feature) = chunk[2], chunk[3]
             for criteria in self.criterias:
                 if feature.startswith(criteria):
                     target_words.append(surface)
                     break
         return target_words
-
-    def get_word_feed(self, artist):
-        with Sqlite() as db:
-            feed = []
-            for lyrics in db.lyrics_by_artist(artist):
-                target_words = self._extract_word_by(lyrics)
-                feed.extend(target_words)
-        return feed
