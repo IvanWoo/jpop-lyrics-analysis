@@ -3,17 +3,15 @@
 ## Requirements
 
 - [pyenv](https://github.com/pyenv/pyenv)
-- [pipenv](https://github.com/pypa/pipenv)
+- [pdm](https://pdm.fming.dev/latest/)
 
 ## Building and deployment
 
 ```sh
-$ brew install mecab
-$ brew install mecab-ipadic
-$ brew install swig
+brew install mecab mecab-ipadic swig dbmate
 
-$ pipenv install --dev
-$ pre-commit install
+pdm install
+pdm run pre-commit install
 ```
 
 ## Workflow
@@ -21,13 +19,13 @@ $ pre-commit install
 1. Extract and store the lyrics into SQLite database locally.
 
 ```sh
-jla scrape --help
+pdm run jla scrape --help
 ```
 
 2. Analyze then generate the word cloud
 
 ```sh
-jla analyze --help
+pdm run jla analyze --help
 ```
 
 ![word cloud sample](examples/word_cloud_sample.png)

@@ -53,4 +53,9 @@ coverage.xml
 .vscode/
 .idea/
 
+# pdm
+.pdm.toml
+__pypackages__/
+
+.env
 tmp/
