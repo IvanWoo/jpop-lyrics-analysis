@@ -34,7 +34,7 @@ class Sqlite:
         if not lyrics:
             raise ValueError("lyrics can not be empty")
         self.cursor.execute(
-            "INSERT INTO jpop VALUES "
+            f"INSERT INTO {TABLE_NAME} VALUES "
             + str((title, artist, lyricist, composer, lyric_url, lyrics))
         )
 

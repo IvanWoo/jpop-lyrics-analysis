@@ -6,7 +6,7 @@ from jpop_lyrics_analysis.models import Jpop
 
 
 class UtaNet:
-    domain = "http://www.uta-net.com"
+    domain = "https://www.uta-net.com"
 
     def validate(self, url: str) -> bool:
         artist_url = f"{self.domain}/artist/"
@@ -37,12 +37,15 @@ class UtaNet:
         for table in soup.find_all("tr"):
             if table.th:
                 continue
+            tds = table.find_all("td")
+            if len(tds) <= 4:
+                continue
 
-            title = table.find("td", {"class": "side td1"}).text
-            lyric_url = self.domain + table.find("td", {"class": "side td1"}).a["href"]
-            artist = table.find("td", {"class": "td2"}).text
-            lyricist = table.find("td", {"class": "td3"}).text
-            composer = table.find("td", {"class": "td4"}).text
+            title = tds[0].text
+            lyric_url = self.domain + tds[0].find("a")["href"]
+            artist = tds[1].text
+            lyricist = tds[2].text
+            composer = tds[3].text
             lyrics = None
 
             yield Jpop(
@@ -63,4 +66,5 @@ class UtaNet:
     def parse(self, url):
         if not self.validate(url):
             raise ValueError(f"unsupported {url=}")
-        yield from self.parse_many(url)
+        # FIXME: use parse_many after fixing the bug in get_all_pages
+        yield from self.parse_one(url)

@@ -23,6 +23,7 @@ license = {text = "MIT"}
 [project.scripts]
 jla = "jpop_lyrics_analysis.entry:main"
 
+[project.optional-dependencies]
 [tool.pdm]
 allow_prereleases = true
 [[tool.pdm.source]]
@@ -39,6 +40,7 @@ dev = [
     "isort",
     "pytest",
     "pytest-cov",
+    "requests-mock>=1.9.3",
 ]
 [tool.pdm.scripts]
 test = "pytest --verbose -s -p no:warnings --cov-report term-missing --cov 'jpop_lyrics_analysis' tests"
