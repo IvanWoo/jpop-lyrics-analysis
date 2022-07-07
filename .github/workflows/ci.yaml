@@ -60,7 +60,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mecab mecab-ipadic swig
           pdm use -f ${{ matrix.python-version }}
-          pdm add unidic-lite
           pdm install
       - name: Run Tests
         run: |

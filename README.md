@@ -35,6 +35,9 @@ pdm run jla analyze --help
 - Expand the database.
 - Try different extraction criteria.
 
+## References
+- [【Python】MacにMeCabを入れて自然言語処理をしてみよう(unidic-lite編)](https://www.teamxeppet.com/python-mecab-unidic-lite_mac/)
+
 ## Acknowledgments
 
 - Inspired by [猫弟Azz](https://www.douban.com/note/630489583/).
