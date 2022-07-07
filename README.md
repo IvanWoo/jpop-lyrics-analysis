@@ -8,7 +8,7 @@
 ## Building and deployment
 
 ```sh
-brew install mecab mecab-ipadic swig dbmate
+brew install mecab-ipadic dbmate
 
 pdm install
 pdm run pre-commit install
