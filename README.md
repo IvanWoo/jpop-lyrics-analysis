@@ -8,7 +8,7 @@
 ## Building and deployment
 
 ```sh
-brew install mecab mecab-ipadic swig dbmate
+brew install mecab-ipadic dbmate
 
 pdm install
 pdm run pre-commit install
@@ -34,6 +34,9 @@ pdm run jla analyze --help
 
 - Expand the database.
 - Try different extraction criteria.
+
+## References
+- [【Python】MacにMeCabを入れて自然言語処理をしてみよう(unidic-lite編)](https://www.teamxeppet.com/python-mecab-unidic-lite_mac/)
 
 ## Acknowledgments
 

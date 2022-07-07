@@ -5,7 +5,7 @@ import MeCab
 
 class SentenceSplitter:
     def __init__(self, criterias: List[str]):
-        self.splitter = MeCab.Tagger("-Ochasen")
+        self.splitter = MeCab.Tagger()
         self.criterias = criterias
 
     def get_chunks(self, content: str):
@@ -19,7 +19,7 @@ class SentenceSplitter:
         target_words = []
         chunks = self.get_chunks(lyrics)
         for chunk in chunks:
-            (surface, feature) = chunk[2], chunk[3]
+            (surface, feature) = chunk[3], chunk[4]
             for criteria in self.criterias:
                 if feature.startswith(criteria):
                     target_words.append(surface)
