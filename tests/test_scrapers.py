@@ -67,3 +67,19 @@ def test_utanet__parse_one(requests_mock):
             lyrics=None,
         ),
     ]
+
+
+def test_utanet__next_page(requests_mock):
+    mock_data = [
+        ("https://www.uta-net.com/artist/39/0/1/", "tests/data/utanet_curr_page.html"),
+        ("https://www.uta-net.com/artist/39/0/2/", "tests/data/utanet_next_page.html"),
+    ]
+    for url, html_file in mock_data:
+        with open(html_file, "r") as f:
+            html = f.read()
+            requests_mock.get(url, text=html)
+
+    curr_page, next_page = mock_data[0][0], mock_data[1][0]
+    utanet = UtaNet()
+    assert utanet.next_page(curr_page) == next_page
+    assert utanet.next_page(next_page) is None

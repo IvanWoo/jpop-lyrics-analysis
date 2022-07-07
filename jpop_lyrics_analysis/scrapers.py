@@ -1,3 +1,5 @@
+from typing import Optional
+
 import requests
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
@@ -21,13 +23,19 @@ class UtaNet:
         # replace full-width space with half-width one
         return lyrics.replace("\u3000", " ").replace("　", " ")
 
-    def get_all_pages(self, url):
+    def next_page(self, url: str) -> Optional[str]:
         r = requests.get(url)
         soup = BeautifulSoup(r.text, "lxml")
-        pages = set([url])
-        for anchor in soup.find("div", {"id": "page_list"}).find_all("a", href=True):
-            pages.add(anchor["href"])
-        return pages
+        next_url = soup.find(
+            "a",
+            {"role": "button", "class": lambda x: "next" in x.split()},
+            href=True,
+        )
+        if next_url:
+            href = next_url["href"]
+            if href.endswith("//"):
+                return
+            return href
 
     def parse_one(self, url):
         print(f"start scraping from {url}")
@@ -62,13 +70,13 @@ class UtaNet:
             )
 
     def parse_many(self, url):
-        pages = self.get_all_pages(url)
-        print(f"will scrape from: {pages}")
-        for page in pages:
+        page = url
+        while page:
+            print(f"will scrape from: {page}")
             yield from self.parse_one(page)
+            page = self.next_page(page)
 
     def parse(self, url):
         if not self.validate(url):
             raise ValueError(f"unsupported {url=}")
-        # FIXME: use parse_many after fixing the bug in get_all_pages
-        yield from self.parse_one(url)
+        yield from self.parse_many(url)
