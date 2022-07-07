@@ -6,12 +6,12 @@ def test_utanet__parse_one(requests_mock):
     target_url = "https://www.uta-net.com/artist/26425/"
     with open("tests/data/utanet_parse_one.html", "r") as f:
         html = f.read()
+        requests_mock.get(target_url, text=html)
 
-    requests_mock.get(target_url, text=html)
     utanet = UtaNet()
     assert list(utanet.parse_one(target_url)) == [
         Jpop(
-            title="Akimahen打ち落とされ傘を伝って",
+            title="Akimahen",
             artist="BAND-MAIKO",
             lyricist="鳩子",
             composer="BAND-MAID",
@@ -19,7 +19,7 @@ def test_utanet__parse_one(requests_mock):
             lyrics=None,
         ),
         Jpop(
-            title="ansanCheck me out ねぇそっと",
+            title="ansan",
             artist="BAND-MAIKO",
             lyricist="鳩子",
             composer="BAND-MAID",
@@ -27,7 +27,7 @@ def test_utanet__parse_one(requests_mock):
             lyrics=None,
         ),
         Jpop(
-            title="祇園町おこしやすおおきに",
+            title="祇園町",
             artist="BAND-MAIKO",
             lyricist="鳩子",
             composer="BAND-MAID",
@@ -35,7 +35,7 @@ def test_utanet__parse_one(requests_mock):
             lyrics=None,
         ),
         Jpop(
-            title="secret MAIKO lips全身全霊嫌な世界やわぁ",
+            title="secret MAIKO lips",
             artist="BAND-MAIKO",
             lyricist="鳩子",
             composer="BAND-MAID",
@@ -43,7 +43,7 @@ def test_utanet__parse_one(requests_mock):
             lyrics=None,
         ),
         Jpop(
-            title="すくりーみんぐ間違っていたって無視できひん",
+            title="すくりーみんぐ",
             artist="BAND-MAIKO",
             lyricist="鳩子",
             composer="BAND-MAID",
@@ -51,7 +51,7 @@ def test_utanet__parse_one(requests_mock):
             lyrics=None,
         ),
         Jpop(
-            title="虎 and 虎もうあきまへんえ呟く",
+            title="虎 and 虎",
             artist="BAND-MAIKO",
             lyricist="鳩子",
             composer="BAND-MAID",
@@ -59,7 +59,7 @@ def test_utanet__parse_one(requests_mock):
             lyrics=None,
         ),
         Jpop(
-            title="YOLOSIOSU叶わへん言葉すべてあんさんの",
+            title="YOLOSIOSU",
             artist="BAND-MAIKO",
             lyricist="鳩子",
             composer="BAND-MAID",

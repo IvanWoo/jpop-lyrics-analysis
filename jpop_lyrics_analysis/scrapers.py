@@ -41,7 +41,11 @@ class UtaNet:
             if len(tds) <= 4:
                 continue
 
-            title = tds[0].text
+            title = (
+                tds[0]
+                .find("span", {"class": lambda x: "songlist-title" in x.split()})
+                .text
+            )
             lyric_url = self.domain + tds[0].find("a")["href"]
             artist = tds[1].text
             lyricist = tds[2].text
